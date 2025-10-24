@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2, XCircle, AlertCircle, Lightbulb } from "lucide-react";
@@ -29,6 +29,12 @@ interface QuestionScreenProps {
 const QuestionScreen = ({ question, currentStep, totalSteps, onAnswer, onNext }: QuestionScreenProps) => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
+
+  // Reset state when question changes
+  useEffect(() => {
+    setSelectedOption(null);
+    setShowFeedback(false);
+  }, [currentStep]);
 
   const handleOptionSelect = (index: number) => {
     if (showFeedback) return;
